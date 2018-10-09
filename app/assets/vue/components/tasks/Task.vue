@@ -27,6 +27,10 @@
 
 <script>
 export default {
-    props: ['tasks']
+    computed: {
+        tasks () {
+            return this.$store.getters.allTasks
+        }
+    }
 }
 </script>

@@ -13,6 +13,19 @@
 
 <script>
 export default {
-    
+    computed: {
+        tasks () {
+            return this.$store.getters.allTasks
+        },
+        checkedAll () {
+            return this.tasks.filter(item => item.completed).length === this.tasks.length
+        }
+    },
+    methods: {
+        checkTasks () {
+            const complete = !this.checkedAll
+            this.tasks.map(item => item.completed = complete)
+        }
+    },
 }
 </script>
