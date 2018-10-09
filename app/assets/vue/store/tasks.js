@@ -32,15 +32,15 @@ export default {
   actions: {
     fetchTasks ({commit}) {
       const tasks = [
-          {id: 1, title: 'first task', description: 'Description first task', completed: true},
-          {id: 2, title: 'second task', description: 'Description second task', completed: false},
-          {id: 3, title: 'third task', description: 'Description third task', completed: false}
+          {id: 1, title: 'first task', description: 'Description first task', completed: true, date: new Date().toLocaleDateString("ru-RU")},
+          {id: 2, title: 'second task', description: 'Description second task', completed: false,  date: new Date().toLocaleDateString("ru-RU")},
+          {id: 3, title: 'third task', description: 'Description third task', completed: false,  date: new Date().toLocaleDateString("ru-RU")}
       ]
 
       commit('loadTasks', tasks)
     },
     createTask ({commit}, {title, description, completed}) {
-      const task = new Task(title, description, completed, '111', 212)
+      const task = new Task(title, description, completed, new Date().toLocaleDateString("ru-RU"), 212)
       commit('createTask', task)
     },
     editTask ({commit}, {id, title, description}) {

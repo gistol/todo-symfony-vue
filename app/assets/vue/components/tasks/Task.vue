@@ -1,3 +1,4 @@
+
 <template>
   <v-list two-line v-if="hasTasks">
     <template v-for="(item, index) in tasks">
@@ -6,10 +7,11 @@
           <v-checkbox v-model="item.completed"></v-checkbox>
         </v-list-tile-action>
         <v-list-tile-content>
-          <v-list-tile-title :class="{'task-completed': item.completed}">{{ item.title }}</v-list-tile-title>
-          <v-list-tile-sub-title class="text--primary">{{ item.description }}</v-list-tile-sub-title>
+          <v-list-tile-title :class="{'task-completed': item.completed}">{{item.title}}</v-list-tile-title>
+          <v-list-tile-action-text>{{item.date}}</v-list-tile-action-text>
+          <v-list-tile-sub-title class="text--primary">{{item.description}}</v-list-tile-sub-title>
         </v-list-tile-content>
-        <v-list-tile-action v-if="true">
+        <v-list-tile-action v-if="false">
           <edit-modal :task="item"></edit-modal>
         </v-list-tile-action>
         <v-list-tile-action>
