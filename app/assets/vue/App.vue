@@ -1,32 +1,35 @@
 <template>
-    <v-app>
-        <v-layout row>
-            <v-flex class="pt-5" xs12 sm6 offset-sm3>
-                <v-card>
-                    <toolbar></toolbar>
-                    <task></task>
-                </v-card>
-            </v-flex>
-        </v-layout>
-    </v-app>
+  <v-app>
+    <v-layout row>
+      <v-flex class="pt-5" xs12 sm6 offset-sm3>
+        <v-card>
+          <toolbar></toolbar>
+          <task></task>
+        </v-card>
+      </v-flex>
+    </v-layout>
+    <drawer></drawer>
+  </v-app>
 </template>
 
 <script>
 import Toolbar from './components/tasks/Toolbar'
 import Task from './components/tasks/Task'
+import Drawer from './components/tasks/Drawer'
 
 export default {
-    components: {
-        Task,
-        Toolbar
-    }
+  components: {
+    Task,
+    Toolbar,
+    Drawer
+  }
 }
 </script>
 
 <style>
-    @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
+  @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
 
-    .task-completed {
-        text-decoration: line-through;
-    }
+  .task-completed {
+    text-decoration: line-through;
+  }
 </style>

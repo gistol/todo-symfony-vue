@@ -1,3 +1,13 @@
+class Task {
+  constructor (title, description, completed, date, id = null) {
+    this.title = title
+    this.description = description
+    this.completed = completed
+    this.date = date
+    this.id = id
+  }
+}
+
 export default {
   state: {
     tasks: []
@@ -5,6 +15,10 @@ export default {
   mutations: {
     loadTasks (state, payload) {
       state.tasks = payload
+    },
+    createTask (state, payload) {
+      state.tasks.push(payload)
+
     },
     editTask (state, {id, title, description}) {
       const task = state.tasks.find(item => item.id === id)
@@ -24,6 +38,10 @@ export default {
       ]
 
       commit('loadTasks', tasks)
+    },
+    createTask ({commit}, {title, description, completed}) {
+      const task = new Task(title, description, completed, '111', 212)
+      commit('createTask', task)
     },
     editTask ({commit}, {id, title, description}) {
       commit('editTask', {id, title, description})
