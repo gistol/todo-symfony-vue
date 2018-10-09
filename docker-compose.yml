@@ -5,7 +5,7 @@ services:
     image: traefik:1.7
     command: --docker --docker.exposedbydefault=false
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   
@@ -44,10 +44,9 @@ services:
       - traefik.frontend.rule=Host:phpadmin.app.localhost
     environment:
       PMA_HOST: mysql
-      PMA_USER: admin
+      PMA_USER: todo
       PMA_PASSWORD: 123456
 
 volumes:
-
   mysql_data:
     driver: local
