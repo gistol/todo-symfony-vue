@@ -1,0 +1,53 @@
+version: '3.3'
+
+services:
+  traefik:
+    image: traefik:1.7
+    command: --docker --docker.exposedbydefault=false
+    ports:
+      - "8080:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  
+  app:
+    image: thecodingmachine/php:7.2-v1-apache-node10
+    labels:
+      - traefik.enable=true
+      - traefik.backend=app
+      - traefik.frontend.rule=Host:app.localhost
+    environment:
+      APACHE_DOCUMENT_ROOT: public/
+      PHP_EXTENSION_XDEBUG: 1
+      # Symfony
+      APP_ENV: dev
+      APP_SECRET: 4b380f435ab1f74499102f45a00a5749
+      DATABASE_URL: mysql://todo:123456@mysql:3306/todo # mysql://db_user:db_password@127.0.0.1:3306/db_name
+    volumes:
+      - ./app:/var/www/html:rw
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: todo
+      MYSQL_USER: todo
+      MYSQL_PASSWORD: 123456
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./services/mysql/utf8mb4.cnf:/etc/mysql/conf.d/utf8mb4.cnf:ro
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.7
+    labels:
+      - traefik.enable=true
+      - traefik.backend=phpmyadmin
+      - traefik.frontend.rule=Host:phpadmin.app.localhost
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: admin
+      PMA_PASSWORD: 123456
+
+volumes:
+
+  mysql_data:
+    driver: local

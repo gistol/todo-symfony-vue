@@ -1,0 +1,19 @@
+
+###> symfony/framework-bundle ###
+/.env
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###
+
+###> symfony/webpack-encore-pack ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-pack ###
