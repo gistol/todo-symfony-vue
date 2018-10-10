@@ -14,6 +14,11 @@ export default {
             description
         })
     },
+    delete (id) {
+        return axios.post('api/task/remove', {
+            id
+        })
+    },
     getAll () {
         return axios.get('api/tasks')
     }

@@ -1,5 +1,5 @@
 <template>
-  <v-dialog width="500" persistent v-model="modal">
+  <v-dialog width="500" v-model="modal">
     <v-btn icon slot="activator">
       <v-icon small color="grey">edit</v-icon>
     </v-btn>

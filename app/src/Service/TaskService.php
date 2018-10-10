@@ -54,6 +54,20 @@ final class TaskService
         return $task;
     }
 
+    /**
+     * @param int $id
+     */
+    public function removeTask(int $id): void
+    {
+        $task = $this->em->getRepository(Task::class)->find($id);
+
+        $this->em->remove($task);
+        $this->em->flush();
+    }
+
+    /**
+     * @return array
+     */
     public function getAll(): array
     {
         return $this->em->getRepository(Task::class)->findBy([], ['id' => 'DESC']);

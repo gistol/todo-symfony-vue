@@ -43,6 +43,8 @@ class TaskController extends AbstractController
         $taskEntity = $this->taskService->createTask($title, $description);
         $data = $this->serializer->serialize($taskEntity, 'json');
 
+        sleep(1);
+
         return new JsonResponse($data, 200, [], true);
     }
 
@@ -62,6 +64,21 @@ class TaskController extends AbstractController
         sleep(1);
 
         return new JsonResponse($data, 200, [], true);
+    }
+
+    /**
+     * @Rest\Post("/api/task/remove", name="removeTask")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function remove(Request $request): JsonResponse
+    {
+        $id = $request->request->get('id');
+        $this->taskService->removeTask($id);
+        
+        sleep(1);
+
+        return new JsonResponse($id, 200, [], true);
     }
 
     /**

@@ -65,8 +65,10 @@ export default {
         .then(res => commit('editTask', res.data))
         .catch(error => commit('error', error))
     },
-    deleteTask ({commit}, {id}) {
-      commit('deleteTask', id)
+    async deleteTask ({commit}, {id}) {
+      await TaskAPI.delete(id)
+        .then(res => commit('deleteTask', res.data))
+        .catch(error => commit('error', error))
     }
   },
   getters: {

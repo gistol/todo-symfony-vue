@@ -19,7 +19,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn flat @click="onCancel">Cancel</v-btn>
-              <v-btn color="red" dark @click="onDelete">Delete</v-btn>
+              <v-btn color="red" :dark="!localLoading" :loading="localLoading" :disabled="localLoading" @click="onDelete">Delete</v-btn>
             </v-card-actions>
           </v-flex>
         </v-layout>
@@ -33,7 +33,8 @@ export default {
   props: ['task'],
   data () {
     return {
-      modal: false
+      modal: false,
+      localLoading: false
     }
   },
   methods: {
@@ -41,11 +42,14 @@ export default {
       this.modal = false
     },
     onDelete () {
+      this.localLoading = true
       this.$store.dispatch('deleteTask', {
         id: this.task.id
       })
-
-      this.modal = false
+      .finally(() => {
+        this.modal = false
+        this.localLoading = false
+      })
     }
   }
 }
