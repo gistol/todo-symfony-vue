@@ -9,6 +9,8 @@
       </v-flex>
     </v-layout>
     <drawer></drawer>
+    <info></info>
+    <error></error>
   </v-app>
 </template>
 
@@ -16,12 +18,16 @@
 import Toolbar from './components/tasks/Toolbar'
 import Task from './components/tasks/Task'
 import Drawer from './components/tasks/Drawer'
+import Info from './components/notifications/Info'
+import Error from './components/notifications/Error'
 
 export default {
   components: {
     Task,
     Toolbar,
-    Drawer
+    Drawer,
+    Info,
+    Error
   }
 }
 </script>

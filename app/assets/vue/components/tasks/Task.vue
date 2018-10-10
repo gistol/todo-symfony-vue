@@ -41,7 +41,7 @@ export default {
       return this.$store.getters.allTasks
     },
     hasTasks () {
-      return this.tasks.length
+      return this.$store.getters.hasTasks
     },
     isLoading () {
       return this.$store.getters.isLoading
