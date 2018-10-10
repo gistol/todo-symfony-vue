@@ -5,9 +5,12 @@ namespace App\Entity;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation\Type as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TaskRepository")
+ * @ORM\Table(name="task")
+ * @ORM\HasLifecycleCallbacks
  */
 class Task
 {
@@ -19,24 +22,24 @@ class Task
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(name="title", type="string", length=50)
      * @Assert\NotBlank()
      */
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(name="description", type="string", length=255)
      * @Assert\NotBlank()
      */
     private $description;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(name="completed", type="boolean")
      */
     private $completed = false;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="created", type="datetime")
      */
     private $created;
 
@@ -92,15 +95,15 @@ class Task
     /**
      * @return bool
      */
-    public function getIsCompleted(): bool
+    public function getCompleted(): bool
     {
         return $this->completed;
     }
 
     /**
-     * @param string $completed
+     * @param bool $completed
      */
-    public function setIsCompleted(bool $completed): void
+    public function setCompleted(bool $completed): void
     {
         $this->completed = $completed;
     }

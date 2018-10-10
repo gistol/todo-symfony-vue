@@ -1,3 +1,5 @@
+import TaskAPI from '../api/task'
+
 class Task {
   constructor (title, description, completed, created = null, id = null) {
     this.title = title
@@ -10,11 +12,25 @@ class Task {
 
 export default {
   state: {
-    tasks: []
+    tasks: [],
+    isLoading: false,
+    error: null
   },
   mutations: {
-    loadTasks (state, payload) {
+    loadTasks (state) {
+      state.isLoading = true
+      state.error = null
+      state.tasks = []
+    },
+    loadTasksSuccess (state, payload) {
+      state.isLoading = false
+      state.error = null
       state.tasks = payload
+    },
+    loadTasksError (state, payload) {
+      state.isLoading = false
+      state.error = payload
+      state.tasks = []
     },
     createTask (state, payload) {
       state.tasks.push(payload)
@@ -31,13 +47,10 @@ export default {
   },
   actions: {
     fetchTasks ({commit}) {
-      const tasks = [
-          {id: 1, title: 'first task', description: 'Description first task', completed: true},
-          {id: 2, title: 'second task', description: 'Description second task', completed: false},
-          {id: 3, title: 'third task', description: 'Description third task', completed: false}
-      ]
-
-      commit('loadTasks', tasks)
+      commit('loadTasks')
+      TaskAPI.getAll()
+        .then(res => commit('loadTasksSuccess', res.data))
+        .catch(err => commit('loadTasksError', err))
     },
     createTask ({commit}, {title, description, completed}) {
       const task = new Task(title, description, completed)
@@ -51,6 +64,12 @@ export default {
     }
   },
   getters: {
+    isLoading (state) {
+      return state.isLoading
+    },
+    hasError (state) {
+      return state.error !== null
+    },
     allTasks (state) {
       return state.tasks
     }
