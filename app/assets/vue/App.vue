@@ -28,6 +28,10 @@ export default {
     Drawer,
     Info,
     Error
+  },
+  beforeMount () {
+    const vueRouting = this.$parent.$el.attributes['data-vue-routing'].value
+    const queryParameters = JSON.parse(this.$parent.$el.attributes['data-query-parameters'].value)
   }
 }
 </script>
