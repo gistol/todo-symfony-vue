@@ -40,7 +40,7 @@ class TaskController extends AbstractController
     {
         $title = $request->request->get('title');
         $description = $request->request->get('description');
-        $taskEntity = $this->taskService->create($title, $message);
+        $taskEntity = $this->taskService->createTask($title, $description);
         $data = $this->serializer->serialize($taskEntity, 'json');
 
         return new JsonResponse($data, 200, [], true);

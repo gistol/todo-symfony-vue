@@ -17,24 +17,24 @@ export default {
     error: null
   },
   mutations: {
-    loadTasks (state) {
+    loading (state) {
       state.isLoading = true
       state.error = null
-      state.tasks = []
     },
-    loadTasksSuccess (state, payload) {
-      state.isLoading = false
-      state.error = null
-      state.tasks = payload
-    },
-    loadTasksError (state, payload) {
+    error (state, payload) {
       state.isLoading = false
       state.error = payload
       state.tasks = []
     },
+    loadTasks (state, payload) {
+      state.isLoading = false
+      state.error = null
+      state.tasks = payload
+    },
     createTask (state, payload) {
-      state.tasks.push(payload)
-
+      state.isLoading = false
+      state.error = null
+      state.tasks.unshift(payload)
     },
     editTask (state, {id, title, description}) {
       const task = state.tasks.find(item => item.id === id)
@@ -47,14 +47,16 @@ export default {
   },
   actions: {
     fetchTasks ({commit}) {
-      commit('loadTasks')
+      commit('loading')
       TaskAPI.getAll()
-        .then(res => commit('loadTasksSuccess', res.data))
-        .catch(err => commit('loadTasksError', err))
+        .then(res => commit('loadTasks', res.data))
+        .catch(error => commit('error', error))
     },
-    createTask ({commit}, {title, description, completed}) {
-      const task = new Task(title, description, completed)
-      commit('createTask', task)
+    createTask ({commit}, {title, description}) {
+      commit('loading')
+      return TaskAPI.create(title, description)
+      .then(res => commit('createTask', res.data))
+      .catch(error => commit('error', error))
     },
     editTask ({commit}, {id, title, description}) {
       commit('editTask', {id, title, description})
