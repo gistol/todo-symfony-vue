@@ -37,6 +37,8 @@ export default {
       state.tasks.unshift(payload)
     },
     editTask (state, {id, title, description}) {
+      state.isLoading = false
+      state.error = null
       const task = state.tasks.find(item => item.id === id)
       task.title = title
       task.description = description
@@ -55,11 +57,13 @@ export default {
     createTask ({commit}, {title, description}) {
       commit('loading')
       return TaskAPI.create(title, description)
-      .then(res => commit('createTask', res.data))
-      .catch(error => commit('error', error))
+        .then(res => commit('createTask', res.data))
+        .catch(error => commit('error', error))
     },
-    editTask ({commit}, {id, title, description}) {
-      commit('editTask', {id, title, description})
+    async editTask ({commit}, {id, title, description}) {      
+      await TaskAPI.edit(id, title, description)
+        .then(res => commit('editTask', res.data))
+        .catch(error => commit('error', error))
     },
     deleteTask ({commit}, {id}) {
       commit('deleteTask', id)

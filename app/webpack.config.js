@@ -35,6 +35,11 @@ Encore
     .enableVersioning(Encore.isProduction())
     .enableVueLoader()
 
+    .configureBabel(function(babelConfig) {
+        babelConfig.presets = ['es2015','stage-2']
+        babelConfig.plugins = ['transform-runtime']
+    })
+
     // enables Sass/SCSS support
     //.enableSassLoader()
 

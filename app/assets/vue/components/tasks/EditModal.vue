@@ -1,5 +1,5 @@
 <template>
-  <v-dialog width="500" v-model="modal">
+  <v-dialog width="500" persistent v-model="modal">
     <v-btn icon slot="activator">
       <v-icon small color="grey">edit</v-icon>
     </v-btn>
@@ -44,7 +44,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn flat @click="onCancel">Cancel</v-btn>
-              <v-btn class="success" :disabled="!valid" @click="onEdit">Save</v-btn>
+              <v-btn class="success" :loading="localLoading" :disabled="!valid || localLoading" @click="onEdit">Save</v-btn>
             </v-card-actions>
           </v-flex>
         </v-layout>
@@ -59,6 +59,7 @@ export default {
   data () {
     return {
       modal: false,
+      localLoading: false,
       valid: false,
       editedTitle: this.task.title,
       editedDescription: this.task.description
@@ -66,16 +67,21 @@ export default {
   },
   methods: {
     onCancel () {
+      this.editedTitle = this.task.title
+      this.editedDescription = this.task.description
       this.modal = false
     },
     onEdit () {
+      this.localLoading = true
       this.$store.dispatch('editTask', {
         id: this.task.id,
         title: this.editedTitle,
         description: this.editedDescription
       })
-
-      this.modal = false
+      .finally(() => {
+        this.modal = false
+        this.localLoading = false
+      })
     }
   }
 }

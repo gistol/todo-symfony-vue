@@ -7,6 +7,13 @@ export default {
             description
         })
     },
+    edit (id, title, description) {
+        return axios.post('api/task/edit', {
+            id,
+            title,
+            description
+        })
+    },
     getAll () {
         return axios.get('api/tasks')
     }

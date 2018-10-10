@@ -47,6 +47,24 @@ class TaskController extends AbstractController
     }
 
     /**
+     * @Rest\Post("/api/task/edit", name="editTask")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function edit(Request $request): JsonResponse
+    {
+        $id = $request->request->get('id');
+        $title = $request->request->get('title');
+        $description = $request->request->get('description');
+        $taskEntity = $this->taskService->editTask($id, $title, $description);
+        $data = $this->serializer->serialize($taskEntity, 'json');
+
+        sleep(1);
+
+        return new JsonResponse($data, 200, [], true);
+    }
+
+    /**
      * @Rest\Get("/api/tasks", name="getAllTasks")
      * @return JsonResponse
      */
