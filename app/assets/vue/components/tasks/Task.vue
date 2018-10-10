@@ -2,7 +2,7 @@
   <div v-if="!isLoading">
     <v-list two-line v-if="hasTasks">
       <template v-for="(item, index) in tasks">
-        <v-list-tile :key="item.id">
+        <v-list-tile :key="item.id" @mouseover="showEdit = item.id" @mouseleave="showEdit = null">
           <v-list-tile-action>
             <v-checkbox v-model="item.completed"></v-checkbox>
           </v-list-tile-action>
@@ -11,7 +11,7 @@
             <v-list-tile-action-text>{{formatDate(item.created)}}</v-list-tile-action-text>
             <v-list-tile-sub-title class="text--primary">{{item.description}}</v-list-tile-sub-title>
           </v-list-tile-content>
-          <v-list-tile-action v-if="true">
+          <v-list-tile-action v-show="showEdit === item.id">
             <edit-modal :task="item"></edit-modal>
           </v-list-tile-action>
           <v-list-tile-action>
@@ -36,6 +36,11 @@ import EditModal from './EditModal'
 import DeleteModal from './DeleteModal'
 
 export default {
+  data () {
+    return {
+      showEdit: null
+    }
+  },
   computed: {
     tasks () {
       return this.$store.getters.allTasks
